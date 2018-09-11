@@ -1,0 +1,230 @@
+<% var color = setting.colorOption; %>
+<style>
+#dwheel_<%= shopHash %> {
+	font-family: 'Roboto';
+}
+#dwheel_<%= shopHash %> .dwheel__coupon_code {
+	font-family: 'Roboto Mono', monospace;
+}
+#dwheel_<%= shopHash %> .input-text,
+#dwheel_<%= shopHash %> input[type=email],
+#dwheel_<%= shopHash %> input[type=text] {
+    background-color: #f2f2f2;
+    color: #43454b;
+    outline: 0;
+    border: 0;
+    -webkit-appearance: none;
+    font-weight: 400;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.125);
+}
+#dwheel_<%= shopHash %> button:hover {
+	background-color: #d5d5d5;
+	border-color: #d5d5d5;
+	color: #333333;
+}
+#dwheel_<%= shopHash %> button {
+	background-color: <%= color.backgroundButton %>;
+	border-color: <%= color.backgroundButton %>;
+	color: <%= color.textColorButton %>;
+}
+
+#dwheel_<%= shopHash %> .dwheel_popup_heading_text {
+	color: <%= color.textColor %>;
+}
+#dwheel_<%= shopHash %> .dwheel_popup_main_text,
+#dwheel_<%= shopHash %> .dwheel_popup_form_error_text,
+#dwheel_<%= shopHash %> .dwheel_popup_rules_text,
+#dwheel_<%= shopHash %> .dwheel_popup_rules_checkbox_label,
+#dwheel_<%= shopHash %> .dwheel_coupon_code,
+#dwheel_<%= shopHash %> .dwheel_offers_text
+{
+	color: <%= color.textColor %>;
+}
+#dwheel_<%= shopHash %> .dwheel__ajax_loader > div {
+	background-color: #ffffff;
+}
+#dwheel_<%= shopHash %> .dwheel_popup_background {
+	background-color: rgb(128,128,128);
+	background: linear-gradient(rgb(15, 12, 41), rgb(48, 43, 99), rgb(36, 36, 62))}
+#dwheel_<%= shopHash %> .dwheel__slice_label:nth-of-type(even) {
+	color: inherit;
+}
+#dwheel_<%= shopHash %> .dwheel_slice_label:nth-of-type(4),
+#dwheel_<%= shopHash %> .dwheel_slice_label:nth-of-type(8),
+#dwheel_<%= shopHash %> .dwheel_slice_label:nth-of-type(12) {
+	color: <%= color.textColor %>;
+}
+#dwheel_<%= shopHash %> .dwheel_offers_progressbar div {
+	width: 70%;
+	background-color: #9acd32;
+}
+</style>
+<div class="dwheel__open">
+	<a style="cursor: pointer" onclick="dwheel_<%= shopHash %>.show_popup(0);"><img class="animated tada" src="<%= appUrl %>/img/gift.png"></a>
+</div>
+<% var display = setting.displayOption; %>
+
+<div id="dwheel_<%= shopHash %>">
+	<div class="dwheel_popup_shadow"></div>
+	<div class="dwheel_popup">
+		<div class="dwheel_popup_background" style="background: <%= color.backgroundColor%>">
+			<div class="dwheel_popup_form_container">
+				<div class="dwheel_form">
+					<div class="dwheel_popup_close_container"><div class="dwheel_popup_close_btn">×</div></div>
+					<form class="dwheel_form_stage1">
+						<div class="dwheel_popup_heading_text"><%- display.title %></div>
+						<div class="dwheel_popup_main_text"><%- display.description %></div>
+						<div class="dwheel_ajax_loader">
+							<div></div>
+							<div></div>
+							<div></div>
+						</div>
+						<div class="dwheel_popup_checkbox_container">
+                            <% if (display.showEmail) { %>
+                            <input type="text" name="dwheel_name" placeholder="Tên của bạn" />
+                            <% } %>
+                            <% if (display.showEmail) { %>
+                            <input type="text" name="dwheel_email" placeholder="Địa chỉ e-mail" />
+                            <% } %>
+						</div>
+						<div class="dwheel_popup_form_error_text"></div>
+                        <button class="dwheel_stage1_submit_btn" type="submit"><%= display.buttonWheelText %></button>
+                        <% if (display.claimed.show) { %>
+						<div class="dwheel_offers_progressbar">
+							<div style="width: <%= display.claimed.valuePercent %>%"></div>
+                        </div>
+                        <div class="dwheel_offers_text"><%- display.claimed.textclaimed %></div>
+                        <% } %>
+						<div class="dwheel_popup_rules_text">
+                            <%- display.rules %>
+						</div>
+						<input type="hidden" name="wheel_hash" value="<%= shopHash %>">
+					</form>
+					<div class="dwheel_form_stage2 dwheel_hidden">
+						<div class="dwheel_popup_heading_text"></div>
+						<div class="dwheel_popup_main_text"><%- display.descSuccessAfter %><br>
+							<br>
+							<span class="dwheel_coupon_code"></span>
+						</div>
+						<div class="dwheel_popup_main_losing" style="display: none">
+							<%- display.descFailAfter %><br>
+						</div>
+						<button class="dwheel_stage2_continue_btn">Sử dụng ngay</button>
+					</div>
+				</div>
+            </div>
+			<div class="dwheel_popup_wheel_container">
+				<div class="dwheel_wheel_container">
+					<!--
+--->
+					<div class="dwheel_wheel_crop" style="overflow: visible; position: absolute; z-index: 1000;">
+						<img class="dwheel_wheel_img" style="width: 101.15%; max-width: none;" src="<%= appUrl %>/img/wheel_shadow.png"></div>
+					<!--
+--->
+					<div class="dwheel_wheel_crop">
+						<!--
+--->
+						<div class="dwheel_wheel">
+							<!--
+-->
+							<img class="dwheel_wheel_img" src="<%= appUrl %>/img/wheel.png">
+							<!--
+-->
+							<div class="dwheel_slice_labels">
+								<!--
+-->
+								<!--
+-->
+								<div class="dwheel_slice_label"><%= slices.slice_1.sliceLabel %></div>
+								<!--
+-->
+								<!--
+-->
+								<div class="dwheel_slice_label"><%= slices.slice_2.sliceLabel %></div>
+								<!--
+-->
+								<!--
+-->
+								<div class="dwheel_slice_label"><%= slices.slice_3.sliceLabel %></div
+
+									-->
+								<!--
+-->
+								<div class="dwheel_slice_label"><%= slices.slice_4.sliceLabel %></div>
+								<!--
+-->
+								<!--
+-->
+								<div class="dwheel_slice_label"><%= slices.slice_5.sliceLabel %></div>
+								<!--
+-->
+								<!--
+-->
+								<div class="dwheel_slice_label"><%= slices.slice_6.sliceLabel %></div>
+								<!--
+-->
+								<!--
+-->
+								<div class="dwheel_slice_label"><%= slices.slice_7.sliceLabel %></div>
+								<!--
+-->
+								<!--
+-->
+								<div class="dwheel_slice_label"><%= slices.slice_8.sliceLabel %></div>
+								<!--
+-->
+								<!--
+-->
+								<div class="dwheel_slice_label"><%= slices.slice_9.sliceLabel %></div>
+								<!--
+-->
+								<!--
+-->
+								<div class="dwheel_slice_label"><%= slices.slice_10.sliceLabel %></div>
+								<!--
+-->
+								<!--
+-->
+								<div class="dwheel_slice_label"><%= slices.slice_11.sliceLabel %></div>
+								<!--
+-->
+								<!--
+-->
+								<div class="dwheel_slice_label"><%= slices.slice_12.sliceLabel %></div>
+								<!--
+-->
+								<!--
+-->
+							</div>
+							<!--
+--->
+						</div>
+						<!--
+--->				
+						<div class="dwheel_slice_logo">
+							<img src="<%= appUrl %>/img/logo.png" />
+						</div>
+					</div>
+					<!--
+--->
+					<img src="<%= appUrl %>/img/marker.png" class="dwheel_marker" style="transform: translateY(-50%) rotate3d(0, 0, 1, 0deg);">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<% var trigger = setting.triggerPlacement; %>
+<script>
+var dwheel_<%= shopHash %> = new dwheel({
+	wheel_hash:'<%= shopHash %>',
+	wheel_dom:'#dwheel_<%= shopHash %>',
+	timed_trigger: true,
+	exit_trigger: true,
+	show_popup_after: <%= trigger.showAfter %>,
+	preview_key: false,
+	recaptcha_sitekey: '6LeR2TcUAAAAAHcuCJxrOt6C-xAvQFni-pw0WijZ',
+	require_recaptcha: 0,
+	prevent_triggers_on_mobile: false,
+	kiosk_mode: false
+});
+</script>

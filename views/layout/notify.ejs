@@ -1,0 +1,87 @@
+<% if (data.coupon != ''){ %>
+<style>
+    #dwheel_coupon_notice {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: .6em;
+        font-size: 1.1em;
+        line-height: 1.2em;
+        text-align: center;
+        z-index: 100000;
+        background-color: #3b6ea2;
+        color: #fff;
+        box-sizing: border-box;
+    }
+    #dwheel_coupon_notice .dwheel_coupon-code {
+        border: 1px dashed rgba(255,255,255,0.3);
+        padding: 3px 30px 3px 20px;
+    }
+</style>
+<div id="dwheel_coupon_notice">
+    <span style="margin-right: .5em">
+        Mã giảm giá của bạn là
+        <strong class="dwheel_coupon-code"><%= data.coupon %></strong>
+        sẽ hết hạn sau 
+        <strong id="dwheel_coupon_countdown"></strong>.
+        <span class="dwheel_coupon_checkout_text">Hãy nhập mã tại trang checkout ngay.</span>
+    </span>
+    <a id="dwheel_notice_close_btn" style="user-select: none; cursor: pointer; color: inherit; text-decoration: underline;">
+        Đóng
+    </a>
+</div>
+<script>
+    function start_dwheel_coupon_countdown() {
+        // var add_minutes = function (dt, minutes) {
+        //     return new Date(dt.getTime() + minutes * 60000);
+        // }
+        var coupon_expire_timestamp = Number('<%= data.timestamp %>');
+
+        function dwheel_notice_seconds_to_minsec(ds) {
+            var d = Math.floor(ds / 86400);
+            var h = Math.floor(ds % 86400 / 3600);
+            var m = Math.floor(ds % 3600 / 60);
+            var s = Math.floor(ds % 3600 % 60);
+
+            if (d > 0) return Math.floor(d) + ' days';
+            if (h > 0) return Math.floor(h) + 'h ' + Math.floor(m) + 'm ' + Math.floor(s) + 's';
+            return Math.floor(m) + 'm ' + Math.floor(s) + 's';
+        }
+
+        function dwheel_notice_refresh_countdown() {
+            var current_timestamp = Math.round(Date.now() / 1000);
+            var secleft = coupon_expire_timestamp - current_timestamp;
+            jQuery('#dwheel_coupon_countdown').html(dwheel_notice_seconds_to_minsec(secleft));
+            if (secleft < 0) {
+                jQuery('#dwheel_coupon_notice').hide();
+                clearInterval(dwheel_notice_cc);
+            }
+        }
+
+        dwheel_notice_refresh_countdown();
+        var dwheel_notice_cc = setInterval(function () {
+            dwheel_notice_refresh_countdown();
+            window.dwheel_notice_cc_interval = dwheel_notice_cc;
+        }, 1000);
+    }
+    clearInterval(window.dwheel_notice_cc_interval);
+    start_dwheel_coupon_countdown();
+</script>
+<!--Close coupon bar notice-->
+<script>
+    jQuery('#dwheel_notice_close_btn').click(function () {
+        jQuery.ajax({
+            url: dwheel_ajaxurl,
+            method: 'POST',
+            data: {
+                action: 'dwheel_close_notice'
+            }
+        });
+        jQuery('#dwheel_coupon_notice').animate({
+            height: 'toggle',
+            opacity: 'toggle'
+        });
+    });
+</script>
+<% } %>

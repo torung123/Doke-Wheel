@@ -1,0 +1,16 @@
+.rc-color-picker-trigger{
+    width: 35px !important;
+    height: 35px !important;
+}
+.success__alert {
+  position: fixed;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 12px 25px;
+  background: #000;
+  color: #fff;
+  z-index: 9999;
+  border-radius: 3px;
+  font-size: 18px;
+}
