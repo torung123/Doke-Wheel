@@ -5,7 +5,8 @@ require('dotenv').config({ path: '.env' });
 
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/wheel',{ useNewUrlParser: true });
 mongoose.Promise = require('bluebird');
-
+mongoose.set('useCreateIndex', true);
+mongoose.set('useFindAndModify', false);
 mongoose.connection.on('error', (err) => {
   console.error(`🚫 Database Error 🚫  → ${err}`);
 });

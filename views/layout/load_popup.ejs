@@ -70,7 +70,7 @@
 		<div class="dwheel_popup_background" style="background: <%= color.backgroundColor%>">
 			<div class="dwheel_popup_form_container">
 				<div class="dwheel_form">
-					<div class="dwheel_popup_close_container"><div class="dwheel_popup_close_btn">×</div></div>
+					<div class="dwheel_popup_close_container"><div class="dwheel_popup_close_btn" data-state="1">×</div></div>
 					<form class="dwheel_form_stage1">
 						<div class="dwheel_popup_heading_text"><%- display.title %></div>
 						<div class="dwheel_popup_main_text"><%- display.description %></div>
@@ -80,11 +80,11 @@
 							<div></div>
 						</div>
 						<div class="dwheel_popup_checkbox_container">
-                            <% if (display.showEmail) { %>
-                            <input type="text" name="dwheel_name" placeholder="Tên của bạn" />
+                            <% if (display.showName) { %>
+                            <input type="text" required name="dwheel_name" placeholder="Tên của bạn" />
                             <% } %>
                             <% if (display.showEmail) { %>
-                            <input type="text" name="dwheel_email" placeholder="Địa chỉ e-mail" />
+                            <input type="text" required name="dwheel_email" placeholder="Địa chỉ e-mail" />
                             <% } %>
 						</div>
 						<div class="dwheel_popup_form_error_text"></div>
@@ -98,7 +98,7 @@
 						<div class="dwheel_popup_rules_text">
                             <%- display.rules %>
 						</div>
-						<input type="hidden" name="wheel_hash" value="<%= shopHash %>">
+						<!-- <input type="hidden" name="wheel_hash" value="<%= shopHash %>"> -->
 					</form>
 					<div class="dwheel_form_stage2 dwheel_hidden">
 						<div class="dwheel_popup_heading_text"></div>
@@ -202,7 +202,9 @@
 						<!--
 --->				
 						<div class="dwheel_slice_logo">
-							<img src="<%= appUrl %>/img/logo.png" />
+							<% if (display.logo != ''){ %>
+							<img src="<%= display.logo %>" />
+							<% } %>
 						</div>
 					</div>
 					<!--
@@ -218,12 +220,12 @@
 var dwheel_<%= shopHash %> = new dwheel({
 	wheel_hash:'<%= shopHash %>',
 	wheel_dom:'#dwheel_<%= shopHash %>',
-	timed_trigger: true,
-	exit_trigger: true,
+	timed_trigger: <%= trigger.timedTrigger %>,
+	exit_trigger: <%= trigger.exitTrigger %>,
 	show_popup_after: <%= trigger.showAfter %>,
-	preview_key: false,
-	recaptcha_sitekey: '6LeR2TcUAAAAAHcuCJxrOt6C-xAvQFni-pw0WijZ',
-	require_recaptcha: 0,
+	//preview_key: false,
+	//recaptcha_sitekey: '6LeR2TcUAAAAAHcuCJxrOt6C-xAvQFni-pw0WijZ',
+	//require_recaptcha: 0,
 	prevent_triggers_on_mobile: false,
 	kiosk_mode: false
 });

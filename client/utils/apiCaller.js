@@ -1,6 +1,6 @@
 import axios from 'axios';
 // import * as Config from '../constants/Config';
-export const API_URL = 'https://e3bbfce3.ngrok.io/api';
+export const API_URL = 'https://9a4038ba.ngrok.io/api';
 
 export default function callApi(endpoint, method = 'GET', body){
     return axios({

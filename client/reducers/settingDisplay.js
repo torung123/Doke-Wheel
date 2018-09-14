@@ -1,9 +1,11 @@
-import { IS_FETCHING, GET_SETTING_SUCCESS, GET_SETTING_FAILED  } from '../constants/ActionTypes';
+import { IS_FETCHING, GET_SETTING_SUCCESS, GET_SETTING_FAILED, IS_RESETTING_COOKIE, RESET_COOKIE  } from '../constants/ActionTypes';
 
 const initState = {
     setting: null,
     error: null,
-    isFetching: false
+    isFetching: false,
+    isResetting: false,
+    resetCookie: null
 };
 var getSetting = (state = initState, action) => {
     switch(action.type){
@@ -27,6 +29,17 @@ var getSetting = (state = initState, action) => {
                 setting: action.payload,
                 error: null,
                 isFetching: false
+            }
+        case IS_RESETTING_COOKIE:
+            return {
+                ...state,
+                isResetting: true
+            }
+        case RESET_COOKIE:
+            return {
+                ...state,
+                resetCookie: action.payload,
+                isResetting: false
             }
         default:
             return {...state};

@@ -37,17 +37,17 @@ class Slice extends Component {
         const gravityTypes = [];
         for (var i = 0; i< 11; i++){
             gravityTypes.push({
-                id: i,
-                value: i * 10,
-                text: i * 10,
-                title: i * 10
+                'id': 'gravity_' + i,
+                'value': i * 10,
+                'text': i * 10,
+                'title': i * 10
             })
         }
-        const GravityTypesEditor = < DropDownEditor options = {
+        const GravityTypesEditor = < DropDownEditor options={
             gravityTypes
         }
         />;
-        const GravityTypesFormatter = <DropDownFormatter options={gravityTypes} value="bug" /> ;
+        const GravityTypesFormatter = <DropDownFormatter options={gravityTypes} value="0" /> ;
         this._columns = [{
             key: 'id',
             name: 'Ô',
@@ -72,10 +72,10 @@ class Slice extends Component {
         }, {
             key: 'gravity',
             name: 'Độ ưu tiên',
-            //editable: true,
+            editable: true,
             resizable: true,
-            editor: GravityTypesEditor,
-            formatter: GravityTypesFormatter
+            editor: GravityTypesEditor
+            //formatter: GravityTypesFormatter
         }, {
             key: 'percent',
             name: '(%)',
@@ -109,21 +109,6 @@ class Slice extends Component {
         this.props.getSlices('doke-apps');
     }
     componentWillReceiveProps(nextProps) {
-        // const {
-        //     slices
-        // } = nextProps.slices;
-        // if (slices != null) {
-        //     const slicesArray = Object.values(slices).map((slice, key) => {
-        //         const index = key + 1;
-        //         return {
-        //             id: index,
-        //             ...slice
-        //         }
-        //     })
-        //     this.setState({
-        //         rows: slicesArray 
-        //     })
-        // }
         if ( !this.props.updateSlices && nextProps.updateSlices ) {
             var sliceRows = [];
             const slices = this.state.rows.map((slice, key)=>{
@@ -142,20 +127,6 @@ class Slice extends Component {
             this.props.slicesUpdated() 
         }
     }
-    // createRows = (numberOfRows) => {
-    //     let rows = [];
-    //     for (let i = 1; i < numberOfRows; i++) {
-    //         rows.push({
-    //             id: i,
-    //             type: ['Mã giảm giá'],
-    //             label: 'label ' + i,
-    //             code: 'code ' + i,
-    //             gravity: '8.33 '
-    //         });
-    //     }
-    //     return rows;
-    // };
-
     rowGetter = (i) => {
         return this.state.rows[i];
     };
@@ -241,7 +212,7 @@ class Slice extends Component {
             <Layout>
                 <Layout.AnnotatedSection
                     title="Ô may mắn"
-                    description="Cấu hình vòng quay, tên, mã coupon, độ ưu tiên. Double click vào ô để sửa thuộc tính. Mã giảm giá nếu để trống là quay trượt"
+                    description={<div>Cấu hình các ô vòng quay, tên hiển thị, mã coupon, độ ưu tiên. <br />Double click vào ô để sửa thuộc tính. <br />Mã giảm giá nếu để trống là quay trượt</div>}
                 >
 
                     < ReactDataGrid

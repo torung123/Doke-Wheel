@@ -274,6 +274,11 @@ const wheelSchema = new Schema({
             default: true
         },
         displayOption: {
+            logo: {
+                type: String,
+                default: '',
+                trim: true
+            },
             title:{
                 type: String,
                 default: 'VÒNG QUAY MAY MẮN'
@@ -310,7 +315,7 @@ const wheelSchema = new Schema({
             },
             rules: {
                 type: String,
-                default: '<strong>Luật quay</strong><br>- Bạn chỉ có thể quay một lần<br>- Các ưu đãi có giá trị sử dụng đến 2019<br>'
+                default: '<strong>Luật quay</strong><br>- Bạn chỉ có thể quay một lần<br>- Các ưu đãi có giá trị sử dụng trong 15 phút<br>'
             },
             titleSuccessAfter: {
                 type: String,
@@ -363,7 +368,27 @@ const wheelSchema = new Schema({
             timeNotify: {
                 type: Number,
                 default: 15 // Thời gian hiện thanh notify (phút)
+            },
+            timedTrigger: {
+                type: Boolean,
+                default: true
+            },
+            exitTrigger: {
+                type: Boolean,
+                default: true
             }
+        }
+    },
+    mailchimp: {
+        active: {
+            type: Boolean,
+            default: false
+        },
+        apiKey: {
+            type: String
+        },
+        listID: {
+            type: String
         }
     },
     shopName: {//hash

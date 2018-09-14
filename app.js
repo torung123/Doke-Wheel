@@ -14,6 +14,35 @@ const index = require('./api/routes/index');
 const install = require('./api/routes/install');
 const api = require('./api/routes/api');
 require('dotenv').config();
+// const findRemoveSync = require('find-remove');
+// findRemoveSync(__dirname + '/exports', {age: {seconds: 1000 * 60 }});
+let fs = require('fs');
+let rimraf = require('rimraf');
+var uploadsDir = __dirname + '/public/exports';
+
+setInterval(() => {
+  fs.readdir(uploadsDir, function(err, files) {
+    files.forEach(function(file, index) {
+      fs.stat(path.join(uploadsDir, file), function(err, stat) {
+        var endTime, now;
+        if (err) {
+          return console.error(err);
+        }
+        now = new Date().getTime();
+        endTime = new Date(stat.ctime).getTime() + 15000;
+        if (now > endTime) {
+          return rimraf(path.join(uploadsDir, file), function(err) {
+            if (err) {
+              return console.error(err);
+            }
+            console.log('successfully deleted');
+          });
+        }
+      });
+    });
+  });
+}, 86400000)
+
 
 const app = express();
 
@@ -27,7 +56,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
-// app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'assets')));
 
 app.set('trust proxy', 1);

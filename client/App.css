@@ -1,3 +1,7 @@
+hr{
+  border: 1px solid #ddd;
+  margin: 25px 0px
+}
 .rc-color-picker-trigger{
     width: 35px !important;
     height: 35px !important;
@@ -13,4 +17,20 @@
   z-index: 9999;
   border-radius: 3px;
   font-size: 18px;
+}
+.Toastify__toast-container{
+  width: 130px;
+  text-align: center;
+  font-size: 18px;
+}
+.Toastify__toast--success {
+  background: #000000;
+  min-height: 45px;
+  display: none
+}
+.Toastify__toast--success:nth-of-type(1){
+  display: flex;
+}
+.bannerWheel{
+  width: 100%
 }

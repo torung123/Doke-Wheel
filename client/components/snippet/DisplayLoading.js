@@ -4,7 +4,7 @@ import {SkeletonPage, Layout, Card, SkeletonBodyText } from '@shopify/polaris';
 class DisplayLoading extends Component {
     render() {
         return (
-            <SkeletonPage>
+   
                 <Layout>
                     <Layout.AnnotatedSection 
                         title="Hiển thị"
@@ -24,7 +24,7 @@ class DisplayLoading extends Component {
                         </Card>
                     </Layout.AnnotatedSection>
                 </Layout>
-            </SkeletonPage>
+       
         );
     }
 }
